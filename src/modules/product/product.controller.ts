@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { Role, Roles } from '../../decorators/roles.decorators';
+import { Auth } from '../../decorators/auth.decorators';
+import { Role } from '../../decorators/roles.decorators';
 import { CreateProductDTO } from './product.dto';
 import { CreateProductUseCase } from './use-cases/create-product.usecase';
 import { ListProductUseCase } from './use-cases/list-product.usecase';
@@ -11,14 +12,14 @@ export class ProductController {
     private listProductUseCase: ListProductUseCase,
   ) {}
 
-  @Roles(Role.ADMIN)
+  @Auth(Role.ADMIN)
   @Post('')
   async create(@Body() data: CreateProductDTO) {
     const result = await this.createProductUseCase.execute(data);
     return result;
   }
 
-  @Roles(Role.USER, Role.ADMIN)
+  @Auth(Role.USER, Role.ADMIN)
   @Get('')
   async get() {
     const result = await this.listProductUseCase.execute();

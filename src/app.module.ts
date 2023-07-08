@@ -15,12 +15,6 @@ import { RolesGuard } from './infra/providers/roles-guard.provider';
     ProductModule,
   ],
   controllers: [AppController],
-  providers: [
-    {
-      provide: 'APP_GUARD',
-      useClass: RolesGuard,
-    },
-    AppService,
-  ],
+  providers: [AppService],
 })
 export class AppModule {}
